@@ -1,18 +1,7 @@
-<p align="center">
-  <a href="https://seedsigner.com/">
-    <img alt="Gitea" src="docs/img/logo.png" width="90"/>
-  </a>
-</p>
-<h1 align="center">SeedSigner OS</h1>
+<h1 align="center">MoneroSigner OS</h1>
+<strong><a href="">This is a fork of SeedSigner OS, with changes necessary for MoneroSigner</a>.</strong> <a href="A huge thank you to https://x.com/SeedSigner">@SeedSigner</a> without this project would not exist!
 
-<p align="center">
-  <a href="https://opensource.org/licenses/MIT" title="License: MIT">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg">
-  </a>
-  <a href="" title="Twitter">
-  <img src="https://img.shields.io/twitter/follow/seedsigner?style=social">
-  </a>
-</p>
+**This readme is still work in progress, like the whole repo. [With time I will change all the documentation where changes to SeedSigner OS where made](Todo.md)**
 
 * [Overview](#overview)
 * [Building](docs/building.md)
@@ -20,6 +9,7 @@
 * [SeedSigner OS structure](docs/structure.md)
 * [Dev workflow](docs/dev_workflow.md)
 * [Customizing Buildroot](docs/customize_buildroot.md)
+* [Todo](Todo.md)
 
 <br/>
 
@@ -31,7 +21,7 @@ JUMP STRAIGHT TO: [🔥🔥🔥🛠 Quickstart: SeedSigner Reproducible Build! �
 
 # Overview
 
-A custom linux based operating system built to manage software running on airgapped Bitcoin signing device. SeedSigner is both the project name and [application](http://github.com/SeedSigner/seedsigner/) running on airgapped hardware. This custom operating system, like all operating systems, manages the hardware resources and provides them to the application code. It's currently designed to run on common Raspberry Pi hardware with [accessories](https://github.com/SeedSigner/seedsigner/#shopping-list). The goal of SeedSigner OS is to provide an easy, fast, and secure way to build microSD card image to securely run [SeedSigner](https://seedsigner.com) code.
+A custom linux based operating system built to manage software running on airgapped Bitcoin signing device. MoneroSigner is both the project name and [application](https://github.com/DiosDelRayo/MoneroSigner) running on airgapped hardware. This custom operating system, like all operating systems, manages the hardware resources and provides them to the application code. It's currently designed to run on common Raspberry Pi hardware with [accessories](https://github.com/SeedSigner/seedsigner/#shopping-list). The goal of SeedSigner OS is to provide an easy, fast, and secure way to build microSD card image to securely run [SeedSigner](https://seedsigner.com) code.
 
 
 ## ⚙️ Under the Hood
