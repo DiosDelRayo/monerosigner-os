@@ -3,8 +3,8 @@
 # global variables
 cur_dir_name=${PWD##*/}
 cur_dir=$(pwd)
-seedsigner_app_repo="https://github.com/SeedSigner/seedsigner.git"
-seedsigner_app_repo_branch="dev"
+seedsigner_app_repo="https://github.com/DiosDelRayo/MoneroSigner.git"
+seedsigner_app_repo_branch="master"
 
 help()
 {
