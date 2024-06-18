@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+from os import listdir, path
+from argparse import ArgumentParser
+
+class BuildRootRemovePackage:
+    def __init__(self, base_path, package_name):
+        self.base_path = base_path
+        self.package_name = package_name
+
+    def remove_package_from_config(self):
+        for folder in listdir(self.base_path):
+            folder_path = path.join(self.base_path, folder)
+            if path.isdir(folder_path):
+                config_path = path.join(folder_path, 'configs', f'{folder}_defconfig')
+                if path.isfile(config_path):
+                    self._process_file(config_path)
+
+    def _process_file(self, file_path):
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+
+        with open(file_path, 'w') as file:
+            for line in lines:
+                if self.package_name not in line:
+                    file.write(line)
+
+    @staticmethod
+    def main():
+        parser = ArgumentParser(description="Remove a specific package from Buildroot config files.")
+        parser.add_argument('path', type=str, help="The base path to start searching for folders.")
+        parser.add_argument('package', type=str, help="The package name to remove from the config files.")
+        args = parser.parse_args()
+
+        remover = BuildRootRemovePackage(args.path, args.package)
+        remover.remove_package_from_config()
+
+if __name__ == "__main__":
+    BuildRootRemovePackage.main()
