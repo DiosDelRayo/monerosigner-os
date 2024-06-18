@@ -1,0 +1,6 @@
+config BR2_PACKAGE_PYTHON_MONERO
+    bool "python-monero"
+    help
+  Python library for Monero
+
+      https://github.com/DiosDelRayo/monero-python

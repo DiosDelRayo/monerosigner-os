@@ -3,8 +3,8 @@
 # global variables
 cur_dir_name=${PWD##*/}
 cur_dir=$(pwd)
-seedsigner_app_repo="https://github.com/DiosDelRayo/MoneroSigner.git"
-seedsigner_app_repo_branch="master"
+xmrsigner_app_repo="https://github.com/DiosDelRayo/MoneroSigner.git"
+xmrsigner_app_repo_branch=master
 
 help()
 {
@@ -22,7 +22,7 @@ help()
       --dev            Builds developer version of images
       --no-clean       Leave previous build, target, and output files
       --skip-repo      Skip pulling repo, assume rootfs-overlay/opt is populated with app code
-      --app-repo       Build image with not official seedsigner github repo
+      --app-repo       Build image with not official xmrsigner github repo
       --app-branch     Build image with repo branch other than default
       --app-commit-id  Build image with specific repo commit id
       --no-op          All other option ignored and script just hangs to keep container alive"
@@ -36,21 +36,21 @@ tail_endless() {
 }
 
 download_app_repo() {
-  # remove previous opt seedsigner app repo code if it already exists
+  # remove previous opt xmrsigner app repo code if it already exists
   rm -fr ${rootfs_overlay}/opt/
   
-  # Download SeedSigner from GitHub and put into rootfs
+  # Download MoneroSigner from GitHub and put into rootfs
   
   # check for custom app branch or custom commit. Custom commit takes priority over branch name
-  if ! [ -z ${seedsigner_app_repo_commit_id} ]; then
-    echo "cloning repo ${seedsigner_app_repo} with commit id ${seedsigner_app_repo_commit_id}"
-    git clone "${seedsigner_app_repo}" "${rootfs_overlay}/opt/" || exit
+  if ! [ -z ${xmrsigner_app_repo_commit_id} ]; then
+    echo "cloning repo ${xmrsigner_app_repo} with commit id ${xmrsigner_app_repo_commit_id}"
+    git clone "${xmrsigner_app_repo}" "${rootfs_overlay}/opt/" || exit
     cd ${rootfs_overlay}/opt/
-    git reset --hard "${seedsigner_app_repo_commit_id}"
+    git reset --hard "${xmrsigner_app_repo_commit_id}"
     cd -
   else
-    echo "cloning repo ${seedsigner_app_repo} with branch ${seedsigner_app_repo_branch}"
-    git clone --depth 1 -b "${seedsigner_app_repo_branch}" "${seedsigner_app_repo}" "${rootfs_overlay}/opt/" || exit
+    echo "cloning repo ${xmrsigner_app_repo} with branch ${xmrsigner_app_repo_branch}"
+    git clone --depth 1 -b "${xmrsigner_app_repo_branch}" "${xmrsigner_app_repo}" "${rootfs_overlay}/opt/" || exit
   fi
      
   # Delete unnecessary files to save space
@@ -61,8 +61,11 @@ download_app_repo() {
   rm -rf ${rootfs_overlay}/opt/docs
   rm -rf ${rootfs_overlay}/opt/README.md
   rm -rf ${rootfs_overlay}/opt/LICENSE.md
+  rm -rf ${rootfs_overlay}/opt/Todo.md
+  rm -rf ${rootfs_overlay}/opt/INLINE_TODO.md
+  rm -rf ${rootfs_overlay}/opt/Makefile
   rm -rf ${rootfs_overlay}/opt/enclosures
-  rm -rf ${rootfs_overlay}/opt/seedsigner_pubkey.gpg
+  rm -rf ${rootfs_overlay}/opt/*.gpg
   rm -rf ${rootfs_overlay}/opt/setup.py
   rm -rf ${rootfs_overlay}/opt/tests
   rm -rf ${rootfs_overlay}/opt/tools
@@ -106,18 +109,18 @@ build_image() {
   cd "${build_dir}"
   make
   
-  # if successful, mv seedsigner_os.img image to /images
+  # if successful, mv xmrsigner_os.img image to /images
   # rename to image to include branch name and config name, then compress
   
-  seedsigner_os_image_output="${image_dir}/seedsigner_os.${seedsigner_app_repo_branch}.${config_name}.img"
-  if ! [ -z ${seedsigner_app_repo_commit_id} ]; then
+  xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${xmrsigner_app_repo_branch}.${config_name}.img"
+  if ! [ -z ${xmrsigner_app_repo_commit_id} ]; then
     # use commit id instead of branch name if it is set
-    seedsigner_os_image_output="${image_dir}/seedsigner_os.${seedsigner_app_repo_commit_id}.${config_name}.img"
+    xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${xmrsigner_app_repo_commit_id}.${config_name}.img"
   fi
   
-  if [ -f "${build_dir}/images/seedsigner_os.img" ] && [ -d "${image_dir}" ]; then
-    mv -f "${build_dir}/images/seedsigner_os.img" "${seedsigner_os_image_output}"
-    sha256sum "${seedsigner_os_image_output}"
+  if [ -f "${build_dir}/images/xmrsigner_os.img" ] && [ -d "${image_dir}" ]; then
+    mv -f "${build_dir}/images/xmrsigner_os.img" "${xmrsigner_os_image_output}"
+    sha256sum "${xmrsigner_os_image_output}"
   fi
   
   cd - > /dev/null # return to previous working directory quietly
@@ -230,17 +233,17 @@ fi
 
 # check for custom app repo
 if ! [ -z ${APP_REPO} ]; then
-  seedsigner_app_repo="${APP_REPO}"
+  xmrsigner_app_repo="${APP_REPO}"
 fi
 
 # check for custom app branch
 if ! [ -z ${APP_BRANCH} ]; then
-  seedsigner_app_repo_branch="${APP_BRANCH}"
+  xmrsigner_app_repo_branch="${APP_BRANCH}"
 fi
 
 # check for custom app branch
 if ! [ -z ${APP_COMMITID} ]; then
-  seedsigner_app_repo_commit_id="${APP_COMMITID}"
+  xmrsigner_app_repo_commit_id="${APP_COMMITID}"
 fi
 
 ###
