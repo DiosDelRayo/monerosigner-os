@@ -14,34 +14,34 @@ SS_ARGS="--no-op" docker compose up -d --force-recreate --build
 
 Start a shell session inside the container by running
 ```bash
-docker exec -it seedsigner-os-build-images-1 bash
+docker exec -it monerosigner-os-build-images-1 bash
 ```
 
 Once you are in the container you can use the build script directly from the `/opt` directory
 ```bash
-./build.sh --pi0 --app-repo=https://github.com/seedsigner/seedsigner.git --app-branch=dev --no-clean
+./build.sh --pi0 --app-repo=https://github.com/DiosDelRayo/MoneroSigner.git --app-branch=master --no-clean
 ```
 
 or
 
 ```bash
-./build.sh --pi0 --app-repo=https://github.com/seedsigner/seedsigner.git --app-commit-id=9c36f5c --no-clean
+./build.sh --pi0 --app-repo=https://github.com/DiosDelRayo/MoneroSigner.git --app-commit-id=9c36f5c --no-clean
 ```
 
 Or you can use any of the Buildroot customization commands like `make menuconfig` or `linux-menuconfig`  from the `/output` directory
 
-Move images manually built with `make` with the command `mv images/seedsigner_os.img /images/`
+Move images manually built with `make` with the command `mv images/monerosigner_os.img /images/`
 
 
 ## Image Location and Naming
 
 By default, the docker-compose.yml is configured to create a container volume of the *images* directory in the repo. This is where all the image files are written out after the container completes building the OS from source. That volume is accessible from the host. The image files are named using this convention:
 
-`seedsigner_os.<app_repo_branch>.<board_config>.img`
+`monerosigner_os.<app_repo_branch>.<board_config>.img`
 
 Example name for a `pi0` built off the 0.5.2 branch would be named:
 
-`seedsigner_os.0.5.2.pi0.img`
+`monerosigner_os.0.5.2.pi0.img`
 
 
 ## Development Configs
