@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+
+from argparse import ArgumentParser
+from os import system
+from subprocess import run
+
+class ZImageInspector:
+    def __init__(self, image_file):
+        self.image_file = image_file
+
+    def run_command(self, command):
+        result = run(command, capture_output=True, text=True)
+        print(result.stdout)
+        return result
+
+    def extract_image(self):
+        self.run_command(['binwalk', '-e', self.image_file])
+        print(f'Extracted contents to {self.image_file}.extracted directory.')
+
+    def decompress_image(self):
+        decompressed_image = f'{self.image_file}.gz'
+        system(f'cp {self.image_file} {decompressed_image}')
+        self.run_command(['gunzip', decompressed_image])
+        print(f'Decompressed {self.image_file} to {self.image_file[:-3]}')
+
+    def show_strings(self):
+        self.run_command(['strings', self.image_file])
+
+    def disassemble_image(self):
+        output_file = f'{self.image_file}.asm'
+        self.run_command(['objdump', '-D', '-b', 'binary', '-m', 'i386', self.image_file, '-o', output_file])
+        print(f'Disassembled {self.image_file} to {output_file}')
+
+def main():
+    parser = ArgumentParser(description='Inspect a zImage file.')
+    parser.add_argument('image', help='Path to the zImage file')
+    parser.add_argument('--extract', action='store_true', help='Extract the zImage contents')
+    parser.add_argument('--decompress', action='store_true', help='Decompress the zImage')
+    parser.add_argument('--strings', action='store_true', help='Show strings in the zImage')
+    parser.add_argument('--disassemble', action='store_true', help='Disassemble the zImage')
+
+    args = parser.parse_args()
+
+    inspector = ZImageInspector(args.image)
+
+    if args.extract:
+        inspector.extract_image()
+    if args.decompress:
+        inspector.decompress_image()
+    if args.strings:
+        inspector.show_strings()
+    if args.disassemble:
+        inspector.disassemble_image()
+
+if __name__ == '__main__':
+    main()
