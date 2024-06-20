@@ -1,29 +1,44 @@
-DEVICE=pi0
-BRANCH=master
-COMMIT_ID=
+DEVICE ?= pi0
+BRANCH ?= master
+COMMIT_ID ?= ''
 APP_REPO=https://github.com/DiosDelRayo/MoneroSigner.git
 BUILD_LOCAL_ARGS=
+SHELL := /bin/bash
+DOCKER_DEFAULT_PLATFORM ?= linux/amd64
+BOARD_TYPE ?= ${DEVICE}
 
+#TODO: 2024-06-20, clean up the mess later, DEVICE and BOARD_TYPE, serious?
+
+.PHONY
 update:
 	git submodule init && git submodule update
 
+.PHONY
 init: update
 
+.PHONY
 standby:
 	SS_ARGS="--no-op" docker compose up -d --no-recreate
 
+.PHONY
 shell:
 	docker exec -it monerosigner-os-build-images-1 bash
 
+.PHONY
 build:
-	docker exec -it monerosigner-os-build-images-1 "bash -c ./build.sh --${DEVICE} --app-repo=${APP_REPO} --app-branch=${BRANCH} --no-clean"
+	@echo "Building with BOARD_TYPE: $(BOARD_TYPE), DOCKER_DEFAULT_PLATFORM: $(DOCKER_DEFAULT_PLATFORM)"
+	@time SS_ARGS ?= "--$(BOARD_TYPE) --app-branch=${BRANCH}" docker compose up --force-recreate --build
 
+.PHONY
 re-create:
 	SS_ARGS="--no-op" docker compose up -d --force-recreate --build
 
+.PHONY
 build-commit:
-	docker exec -it monerosigner-os-build-images-1 "bash -c ./build.sh --pi0 --app-repo=${APP_REPO} --app-commit-id=${COMMIT_ID} --no-clean"
+	@echo "Building with BOARD_TYPE: $(BOARD_TYPE), COMMIT: $(COMMIT_ID)"
+	@time SS_ARGS ?= "--$(BOARD_TYPE) --app-branch=${BRANCH} --app-repo=${APP_REPO} --app-commit-id=${COMMIT_ID} --no-clean" docker compose up --force-recreate --build
 
+.PHONY
 build-local-install-dependencies:
 	sudo apt update && \
 		sudo apt install \
@@ -45,8 +60,10 @@ build-local-install-dependencies:
 			libssl-dev \
 			dosfstools
 
+.PHONY
 build-local:
 	cd opt; ./build --${DEVICE} ${BUILD_LOCAL_ARGS}
 
+.PHONY
 update-external-packages:
 	@tools/update_devices_config_in.sh
