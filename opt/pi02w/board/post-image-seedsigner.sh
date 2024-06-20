@@ -1,6 +1,8 @@
 #!/bin/bash
-
 set -e
+
+DISK_IMAGE_NAME=xmrsigner_os
+DISK_LABEL=XMRSIGNEROS
 
 sectorsToBlocks() {
   echo $(( ( "$1" * 512 ) / 1024 ))
@@ -31,7 +33,7 @@ EOF
 START=$(/sbin/fdisk -l -o Start disk.img|tail -n 1)
 SECTORS=$(/sbin/fdisk -l -o Sectors disk.img|tail -n 1)
 ### needed: apt install dosfstools
-/sbin/mkfs.vfat --invariant -i ba5eba11 -n SEEDSIGNROS disk.img --offset $START $(sectorsToBlocks $SECTORS)
+/sbin/mkfs.vfat --invariant -i ba5eba11 -n $DISK_LABEL disk.img --offset $START $(sectorsToBlocks $SECTORS)
 OFFSET=$(sectorsToBytes $START)
 
 # Copy boot files.
@@ -51,6 +53,6 @@ touch -d "${disk_timestamp}" `find boot overlays`
 mcopy -bpm -i "disk.img@@$OFFSET" boot/* ::
 # mcopy doesn't copy directories deterministically, so rely on sorted shell globbing instead.
 mcopy -bpm -i "disk.img@@$OFFSET" overlays/* ::overlays
-mv disk.img ${BASE_DIR}/images/seedsigner_os.img
+mv disk.img ${BASE_DIR}/images/${DISK_IMAGE_NAME}.img
 
 cd -
