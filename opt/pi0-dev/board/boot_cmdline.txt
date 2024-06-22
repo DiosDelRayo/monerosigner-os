@@ -1,1 +1,1 @@
-root=/dev/mmcblk0p2 rootwait console=tty1 console=ttyAMA0,115200 spidev.bufsiz=131072
+root=/dev/mmcblk0p2 rootwait console=tty1 console=ttyAMA0,115200 spidev.bufsiz=131072 modules-load=dwc2,g_ether

@@ -88,3 +88,50 @@ find ${TARGET_DIR}/usr/lib/python3.10 -name '*.py' \
 	xargs -0 --no-run-if-empty rm -f
 
 find "${TARGET_DIR}" -name '.DS_Store' -print0 | xargs -0 --no-run-if-empty rm -f
+
+# Set up USB gadget network interface
+cat << EOF >> ${TARGET_DIR}/etc/network/interfaces
+
+auto usb0
+allow-hotplug usb0
+iface usb0 inet dhcp
+EOF
+
+# Set up remote logging
+cat << EOF > ${TARGET_DIR}/etc/init.d/S99remotelogging
+#!/bin/sh
+
+LOGSERVER=\$(ip route | awk '/default/ { print \$3 }')
+
+start() {
+    logger "Starting remote logging"
+    /usr/bin/nc -u \$LOGSERVER 5514 | /usr/bin/logger &
+}
+
+stop() {
+    logger "Stopping remote logging"
+    killall nc
+}
+
+case "\$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  *)
+    echo "Usage: \$0 {start|stop}"
+    exit 1
+esac
+
+exit 0
+EOF
+
+chmod +x ${TARGET_DIR}/etc/init.d/S99remotelogging
+
+# Set up SSH with provided public key
+mkdir -p ${TARGET_DIR}/root/.ssh
+echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOehLkdqEEaaXBrv2ooTE92+jbC/b3Wrvp+R3b9HnSS9" > ${TARGET_DIR}/root/.ssh/authorized_keys
+chmod 700 ${TARGET_DIR}/root/.ssh
+chmod 600 ${TARGET_DIR}/root/.ssh/authorized_keys

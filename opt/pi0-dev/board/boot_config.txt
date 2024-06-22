@@ -17,3 +17,6 @@ dtparam=spi=on
 boot_delay=0
 disable_splash=1
 force_turbo=1
+
+# enable OTG
+dtoverlay=dwc2

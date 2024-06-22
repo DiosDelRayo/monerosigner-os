@@ -21,3 +21,6 @@ disable_splash=1
 # https://github.com/raspberrypi/firmware/blob/master/boot/overlays/README
 dtoverlay=disable-wifi
 dtoverlay=disable-bt
+
+# enable OTG
+dtoverlay=dwc2
