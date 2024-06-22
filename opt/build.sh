@@ -1,5 +1,8 @@
 #!/bin/bash
 
+NOW=$(date +%Y-%m-%d_%H:%M)
+LOG_FILE="/output/log/build-${NOW}.log"
+
 # global variables
 cur_dir_name=${PWD##*/}
 cur_dir=$(pwd)
@@ -20,6 +23,7 @@ help()
   Options:
   -h, --help           Display a help screen and quit 
       --dev            Builds developer version of images
+      --log            Log build to ${LOG_FILE}
       --no-clean       Leave previous build, target, and output files
       --skip-repo      Skip pulling repo, assume rootfs-overlay/opt is populated with app code
       --app-repo       Build image with not official xmrsigner github repo
@@ -168,7 +172,10 @@ while (( "$#" )); do
     NO_OP=0; shift
     ;;
   --dev)
-    DEVBUILD=0; shift
+    DEVBUILD=0; LOGBUILD=0; shift
+    ;;
+  --log)
+    LOGBUILD=0; shift
     ;;
   --app-repo=*)
     APP_REPO=$(echo "${1}" | cut -d "=" -f2-); shift
@@ -231,6 +238,15 @@ if ! [ -z $DEVBUILD ]; then
   DEVARG="-dev"
 fi
 
+
+# Check for --log argument to pass to build_image function
+LOG=""
+if ! [ -z $LOGBUILD ]; then
+  echo "Log build to ${LOG_FILE}..."
+  mkdir -p $(dirname $LOG_FILE)
+  LOG="2>&1 | tee -a ${LOG_FILE}"
+fi
+
 # check for custom app repo
 if ! [ -z ${APP_REPO} ]; then
   xmrsigner_app_repo="${APP_REPO}"
@@ -252,30 +268,35 @@ fi
 
 # Build All Architectures
 if ! [ -z ${ALL_FLAG} ]; then
-  build_image "pi0${DEVARG}" "clean" "${SKIPREPO_ARG}"
-  build_image "pi02w${DEVARG}" "clean" "skip-repo"
-  build_image "pi2${DEVARG}" "clean" "skip-repo"
-  build_image "pi4${DEVARG}" "clean" "skip-repo"
+  build_image "pi0${DEVARG}" "clean" "${SKIPREPO_ARG}" $LOG
+  build_image "pi02w${DEVARG}" "clean" "skip-repo" $LOG
+  build_image "pi2${DEVARG}" "clean" "skip-repo" $LOG
+  build_image "pi4${DEVARG}" "clean" "skip-repo" $LOG
 fi
 
 # Build only for pi0, pi0w, and pi1
 if ! [ -z ${PI0_FLAG} ]; then
-  build_image "pi0${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}"
+  build_image "pi0${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}" $LOG
 fi
 
 # Build only for pi2
 if ! [ -z ${PI2_FLAG} ]; then
-  build_image "pi2${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}"
+  build_image "pi2${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}" $LOG
 fi
 
 # build for pi02w
 if ! [ -z ${PI02W_FLAG} ]; then
-  build_image "pi02w${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}"
+  build_image "pi02w${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}" $LOG
 fi
 
 # build for pi4
 if ! [ -z ${PI4_FLAG} ]; then
-  build_image "pi4${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}"
+  build_image "pi4${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}" $LOG
+fi
+
+if ! [ -z $LOGBUILD ]; then
+  mkdir -p /images/log/
+  cp $LOG_FILE /images/log/.
 fi
 
 exit 0
