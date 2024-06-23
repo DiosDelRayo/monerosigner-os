@@ -40,10 +40,10 @@ class BuildRootAddPackage:
                 if self.package_name not in line:
                     file.write(line)
                 else:
-                    file.write(f"{self.package_name}=y\n")
+                    file.write(f"\n{self.package_name}=y")
                     done = True
             if not done:
-                file.write(f"{self.package_name}=y\n")
+                file.write(f"\n{self.package_name}=y")
 
     @staticmethod
     def main():
