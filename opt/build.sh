@@ -243,7 +243,12 @@ fi
 LOG=""
 if ! [ -z $LOGBUILD ]; then
   echo "Log build to ${LOG_FILE}..."
-  mkdir -p $(dirname $LOG_FILE)
+  log_folder = $(dirname $LOG_FILE)
+  mkdir -p $s{log_folder
+  if ! [ -d "$log_folder" ]; then
+    echo "Couldn't create ${log_folder}, exit."
+    exit 1
+  fi
   LOG="2>&1 | tee -a ${LOG_FILE}"
 fi
 
