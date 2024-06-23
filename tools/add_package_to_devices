@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+from os import listdir, path
+from argparse import ArgumentParser
+
+class BuildRootAddPackage:
+    def __init__(self, base_path, package_name, devices):
+        self.base_path = base_path
+        self.package_name = package_name
+        self.devices = devices
+
+    def add_package_to_config(self):
+        for device in self.devices:
+            folders_to_search = self._get_folders(device)
+            for folder in folders_to_search:
+                folder_path = path.join(self.base_path, folder)
+                if path.isdir(folder_path):
+                    config_path = path.join(folder_path, 'configs', f'{folder}_defconfig')
+                    if path.isfile(config_path):
+                        self._process_file(config_path)
+
+    def _get_folders(self, device):
+        if device == 'all':
+            return [folder for folder in listdir(self.base_path) if folder.startswith('pi') and path.isdir(path.join(self.base_path, folder))]
+
+        elif device == 'dev':
+            return [device for device in listdir(self.base_path) if device.endswith('-dev') and path.isdir(path.join(self.base_path, device))]
+        elif device == 'production':
+            return [folder for folder in listdir(self.base_path) if folder.startswith('pi') and not folder.endswith('-dev') and path.isdir(path.join(self.base_path, folder))]
+        else:
+            return [device]
+
+    def _process_file(self, file_path):
+        print(f'Process {file_path}...')
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+
+        with open(file_path, 'w') as file:
+            done: bool = False
+            for line in lines:
+                if self.package_name not in line:
+                    file.write(line)
+                else:
+                    file.write(f"{self.package_name}=y")
+                    done = True
+            if not done:
+                file.write(f"{self.package_name}=y")
+
+    @staticmethod
+    def main():
+        parser = ArgumentParser(description="Add a specific package to Buildroot config files.")
+        parser.add_argument('path', type=str, help="The base path to start searching for folders.")
+        parser.add_argument('package', type=str, help="The package name to add to the config files.")
+        parser.add_argument('devices', type=str, help="Devices to target (all, dev, production, pi0, pi02W, pi2, pi4, pi0-dev) separated by commas.")
+        args = parser.parse_args()
+
+        devices = args.devices.split(',')
+        adder = BuildRootAddPackage(args.path, args.package, devices)
+        adder.add_package_to_config()
+
+if __name__ == "__main__":
+    BuildRootAddPackage.main()
