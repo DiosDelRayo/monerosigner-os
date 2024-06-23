@@ -31,7 +31,6 @@ class BuildRootAddPackage:
             return [device]
 
     def _process_file(self, file_path):
-        print(f'Process {file_path}...')
         with open(file_path, 'r') as file:
             lines = file.readlines()
 
@@ -41,10 +40,10 @@ class BuildRootAddPackage:
                 if self.package_name not in line:
                     file.write(line)
                 else:
-                    file.write(f"{self.package_name}=y")
+                    file.write(f"{self.package_name}=y\n")
                     done = True
             if not done:
-                file.write(f"{self.package_name}=y")
+                file.write(f"{self.package_name}=y\n")
 
     @staticmethod
     def main():
