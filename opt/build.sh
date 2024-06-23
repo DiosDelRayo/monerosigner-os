@@ -296,7 +296,7 @@ fi
 
 if ! [ -z $LOGBUILD ]; then
   mkdir -p /images/log/
-  cp $LOG_FILE /images/log/.
+  cp $LOG_FILE /images/log/
 fi
 
 exit 0
