@@ -2,6 +2,9 @@ config BR2_PACKAGE_PYTHON_MONERO
     bool "python-monero"
     select BR2_PACKAGE_PYTHON_PYNACL
     select BR2_PACKAGE_PYTHON_PYCRYPTODOMEX
+    select BR2_PACKAGE_PYTHON_REQUESTS
+    select BR2_PACKAGE_PYTHON_IPADDRESS
+    select BR2_PACKAGE_PYTHON_VARINT
     help
   Python library for Monero
 

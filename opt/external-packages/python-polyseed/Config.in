@@ -1,5 +1,6 @@
 config BR2_PACKAGE_PYTHON_POLYSEED
     bool "python-polyseed"
+    select BR2_PACKAGE_PYTHON3_XZ
     help
   Python library for polyseed
 

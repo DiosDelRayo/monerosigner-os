@@ -1,0 +1,6 @@
+config BR2_PACKAGE_PYTHON_VARINT
+    bool "python-varint"
+    help
+      Variable length integer encoding.
+
+      https://github.com/fmoo/python-varint
