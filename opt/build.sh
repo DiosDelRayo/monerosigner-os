@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NOW=$(date +%Y-%m-%d_%H:%M)
-LOG_FILE="/output/log/build-${NOW}.log"
+LOG_FILE="${PWD}/build-${NOW}.log"
 
 # global variables
 cur_dir_name=${PWD##*/}
@@ -243,13 +243,15 @@ fi
 LOG=""
 if ! [ -z $LOGBUILD ]; then
   echo "Log build to ${LOG_FILE}..."
-  log_folder = $(dirname $LOG_FILE)
-  mkdir -p $s{log_folder
+  log_folder=$(dirname $LOG_FILE)
+  if ! [ -d "$log_folder" ]; then
+    mkdir -p $log_folder
+  fi
   if ! [ -d "$log_folder" ]; then
     echo "Couldn't create ${log_folder}, exit."
     exit 1
   fi
-  LOG="2>&1 | tee -a ${LOG_FILE}"
+  LOG=" | tee -a ${LOG_FILE}"
 fi
 
 # check for custom app repo
