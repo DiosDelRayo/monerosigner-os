@@ -10,6 +10,11 @@ BOARD_TYPE ?= ${DEVICE}
 CURRENT_XMRSIGNER_VERSION=$(shell grep VERSION ../MoneroSigner/src/xmrsigner/controller.py | sed -E 's/^.*([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
 VERSION=$(shell cat VERSION)
 
+VIDEO_DEVICE=/dev/video4
+VIDEO_INPUT=1
+VIDEO_WIDTH=1920
+VIDEO_HEIGHT=1080
+
 # TODO: 2024-06-20, clean up the mess later, DEVICE and BOARD_TYPE, serious?
 
 sync-version:
@@ -73,6 +78,9 @@ build-local:
 update-external-packages:
 	@tools/update_devices_config_in.sh
 
-listen_for_logs:
+listen-for-logs:
 	@echo 'Press CTRL+C to stop listening!'
 	@nc -u -l 0.0.0.0 ${LOG_PORT} | tee -a listen_for_logs.txt
+
+watch-hdmi:
+	@mplayer tv:// -tv driver=v4l2:device=$(VIDEO_DEVICE):input=$(VIDEO_INPUT):width=$(VIDEO_WIDTH):height=$(VIDEO_HEIGHT)
