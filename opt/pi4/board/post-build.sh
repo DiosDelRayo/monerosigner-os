@@ -32,7 +32,7 @@ rm -rf ${TARGET_DIR}/usr/lib/python3.10/turtle.pyc
 rm -rf ${TARGET_DIR}/usr/lib/python3.10/pydoc.pyc
 rm -rf ${TARGET_DIR}/usr/lib/python3.10/doctest.pyc
 rm -rf ${TARGET_DIR}/usr/lib/python3.10/mailbox.pyc
-rm -rf ${TARGET_DIR}/usr/lib/python3.10/zipfile.pyc
+# rm -rf ${TARGET_DIR}/usr/lib/python3.10/zipfile.pyc
 rm -rf ${TARGET_DIR}/usr/lib/python3.10/tarfile.pyc
 rm -rf ${TARGET_DIR}/usr/lib/python3.10/pickletools.pyc
 rm -rf ${TARGET_DIR}/usr/lib/python3.10/turtledemo
