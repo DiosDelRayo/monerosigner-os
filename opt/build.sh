@@ -60,13 +60,9 @@ download_app_repo() {
   # Delete unnecessary files to save space
   rm -rf ${rootfs_overlay}/opt/.git
   rm -rf ${rootfs_overlay}/opt/.gitignore
-  rm -rf ${rootfs_overlay}/opt/requirements.txt
-  rm -rf ${rootfs_overlay}/opt/requirements-raspi.txt
+  rm -rf ${rootfs_overlay}/opt/*.txt
   rm -rf ${rootfs_overlay}/opt/docs
-  rm -rf ${rootfs_overlay}/opt/README.md
-  rm -rf ${rootfs_overlay}/opt/LICENSE.md
-  rm -rf ${rootfs_overlay}/opt/Todo.md
-  rm -rf ${rootfs_overlay}/opt/INLINE_TODO.md
+  rm -rf ${rootfs_overlay}/opt/*.md
   rm -rf ${rootfs_overlay}/opt/Makefile
   rm -rf ${rootfs_overlay}/opt/enclosures
   rm -rf ${rootfs_overlay}/opt/*.gpg
@@ -111,12 +107,18 @@ build_image() {
 
   make BR2_EXTERNAL="../${config_dir}/" O="${build_dir}" -C ./buildroot/ ${config_name}_defconfig
   cd "${build_dir}"
+  make host-python-toml #TODO: 2024-06-26, quick fix to run the build without problems, should investigate why host-python-toml is an issue
   make
   
   # if successful, mv xmrsigner_os.img image to /images
   # rename to image to include branch name and config name, then compress
   
-  xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${xmrsigner_app_repo_branch}.${config_name}.img"
+  VERSION=$(grep VERSION ${rootfs_overlay}/opt/src/xmrsigner/controller.py | awk -F'"' '{ print $2 }')
+  if ! [ -z "$VERSION" ]; then
+	  xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${VERSION}.${config_name}.img"
+  else
+	  xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${xmrsigner_app_repo_branch}.${config_name}.img"
+  fi
   if ! [ -z ${xmrsigner_app_repo_commit_id} ]; then
     # use commit id instead of branch name if it is set
     xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${xmrsigner_app_repo_commit_id}.${config_name}.img"
