@@ -114,7 +114,7 @@ build_image() {
   # rename to image to include branch name and config name, then compress
   
   VERSION=$(grep VERSION ${rootfs_overlay}/opt/src/xmrsigner/controller.py | awk -F'"' '{ print $2 }')
-  if ! [ -z "$VERSION" ]; then
+  if [ -n "$VERSION" ]; then
 	  xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${VERSION}.${config_name}.img"
   else
 	  xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${xmrsigner_app_repo_branch}.${config_name}.img"
