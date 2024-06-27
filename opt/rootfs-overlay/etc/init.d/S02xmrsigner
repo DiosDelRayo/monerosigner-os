@@ -1,0 +1,35 @@
+#!/bin/sh
+# Provides: SeedSigner
+
+start() {
+	# TODO: 2024-07-15, remove /start.sh and call directly /usr/bin/python3 -m xmrsigner, after xmrsigner is buildroot package
+	/start.sh &
+	echo "Service starting up"   
+}
+
+stop () {    
+	# TODO: 2024-06-27, actually shutdown the service???
+	echo "Service shutting down"
+}
+
+status () {
+	# TODO: 2024-06-27, does it really??? Liar!
+	echo "Everything looks good"
+}
+
+##case statement to be used to call functions##
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status 
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status}"
+        exit 5
+esac
+exit $?
