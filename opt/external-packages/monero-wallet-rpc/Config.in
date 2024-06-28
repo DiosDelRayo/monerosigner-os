@@ -1,0 +1,7 @@
+config BR2_PACKAGE_MONERO_WALLET_RPC
+	bool "monero-wallet-rpc"
+	help
+	  Monero Wallet RPC is a standalone wallet that runs as a
+	  RPC server, allowing you to interact with your wallet.
+
+	  https://www.getmonero.org/

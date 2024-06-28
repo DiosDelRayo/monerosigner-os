@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-PYTHON_MONERO_VERSION = 1.1.1
+PYTHON_MONERO_VERSION = 1.2.0
 PYTHON_MONERO_SITE = $(call github,DiosDelRayo,monero-python,v$(PYTHON_MONERO_VERSION))
 PYTHON_MONERO_DEPENDENCIES = python-pynacl python-pycryptodomex python-requests python-varint zlib
 PYTHON_MONERO_SETUP_TYPE = setuptools
