@@ -3,6 +3,9 @@ set -e
 
 DISK_IMAGE_NAME=xmrsigner_os
 DISK_LABEL=XMRSIGNEROS
+# image size in MB
+IMG_SIZE=50
+
 
 sectorsToBlocks() {
   echo $(( ( "$1" * 512 ) / 1024 ))
@@ -19,7 +22,7 @@ mkdir -p ${BUILD_DIR}/custom_image
 cd ${BUILD_DIR}/custom_image
 
 # Create disk image.
-dd if=/dev/zero of=disk.img bs=1M count=35 #35 MB
+dd if=/dev/zero of=disk.img bs=1M count=${IMG_SIZE}
 
 ### needed: apt install fdisk
 /sbin/sfdisk disk.img <<EOF

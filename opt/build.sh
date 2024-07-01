@@ -113,7 +113,7 @@ build_image() {
   # if successful, mv xmrsigner_os.img image to /images
   # rename to image to include branch name and config name, then compress
   
-  VERSION=$(grep VERSION ${rootfs_overlay}/opt/src/xmrsigner/controller.py | awk -F'"' '{ print $2 }')
+  VERSION=$(grep VERSION /opt/${rootfs_overlay}/opt/src/xmrsigner/controller.py | awk -F'"' '{ print $2 }')
   if [ -n "$VERSION" ]; then
 	  xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${VERSION}.${config_name}.img"
   else
@@ -126,7 +126,7 @@ build_image() {
   
   if [ -f "${build_dir}/images/xmrsigner_os.img" ] && [ -d "${image_dir}" ]; then
     mv -f "${build_dir}/images/xmrsigner_os.img" "${xmrsigner_os_image_output}"
-    sha256sum "${xmrsigner_os_image_output}"
+    sha256sum "${xmrsigner_os_image_output}" > ${xmrsigner_os_image_output}.sha256sum
   fi
   
   cd - > /dev/null # return to previous working directory quietly
