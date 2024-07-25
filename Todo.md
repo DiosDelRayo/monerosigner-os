@@ -1,8 +1,7 @@
 # Todo
 - [x] Delete in `opt/external-packages` the package `python-embit`
 - [ ] Change in `opt/external-packages` the package `python-pyzbar`
-- [ ] Change in `opt/external-packages` the package `python-urtypes`, probably remove and substitute, not yet sure
-- [ ] Script to generate Configure.in's in device folders to pick up all external packages
+- [x] Script to generate Configure.in's in device folders to pick up all external packages
 - [x] Add in `opt/external-packages` the package `monero-python`
 - [x] Add in `opt/external-packages` the package `polyseed-python`
 - [ ] Add in `opt/external-packages` the package `py-cryptonight`, to check if it compiles without issues
