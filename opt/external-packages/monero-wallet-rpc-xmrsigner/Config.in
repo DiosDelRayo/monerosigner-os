@@ -1,0 +1,8 @@
+config BR2_PACKAGE_MONERO_WALLET_RPC_XMRSIGNER
+    bool "monero-wallet-rpc-xmrsigner"
+    help
+      Monero Wallet RPC (XMRSigner version) is a standalone wallet that runs as a
+      RPC server, allowing you to interact with your wallet. This version is patched
+      so it can import/export ecrypted key images and maintained until it got merged
+      into the offcial version.
+      https://github.com/DiosDelRayo/monero/releases
