@@ -1,7 +1,7 @@
 #!/bin/bash
 
-NOW=$(date +%Y-%m-%d_%H:%M)
-LOG_FILE="${PWD}/build-${NOW}.log"
+NOW=$(date +%Y-%m-%d_%H_%M)
+LOG_FILE="/tmp/build-${NOW}.log"
 
 # global variables
 cur_dir_name=${PWD##*/}
@@ -305,6 +305,7 @@ fi
 
 if ! [ -z $LOGBUILD ]; then
   mkdir -p /images/log/
+  echo "PWD: ${PWD} LOGFILE: ${LOG_FILE}"
   cp $LOG_FILE /images/log/
 fi
 

@@ -21,6 +21,7 @@ rm -rf ${BUILD_DIR}/custom_image
 mkdir -p ${BUILD_DIR}/custom_image
 cd ${BUILD_DIR}/custom_image
 
+echo "Create disc image of ${IMG_SIZE}MB.."
 # Create disk image.
 dd if=/dev/zero of=disk.img bs=1M count=${IMG_SIZE}
 
