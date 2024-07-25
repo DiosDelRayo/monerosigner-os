@@ -10,6 +10,11 @@ MONERO_WALLET_RPC_XMRSIGNER_SITE = https://github.com/DiosDelRayo/monero/release
 MONERO_WALLET_RPC_XMRSIGNER_LICENSE = BSD-3-Clause
 MONERO_WALLET_RPC_XMRSIGNER_LICENSE_FILES = LICENSE
 
+define MONERO_WALLET_RPC_XMRSIGNER_EXTRACT_CMDS
+	mkdir -p $(@D)
+	tar -xjf /buildroot_dl/monero-wallet-rpc-xmrsigner/$(MONERO_WALLET_RPC_XMRSIGNER_SOURCE) -C $(@D)
+endef
+
 define MONERO_WALLET_RPC_XMRSIGNER_INSTALL_TARGET_CMDS
 	$(INSTALL) -D -m 0755 $(@D)/monero-wallet-rpc $(TARGET_DIR)/usr/bin/monero-wallet-rpc
 endef
