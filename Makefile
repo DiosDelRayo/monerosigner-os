@@ -10,7 +10,7 @@ BOARD_TYPE ?= ${DEVICE}
 CURRENT_XMRSIGNER_VERSION=$(shell grep VERSION ../MoneroSigner/src/xmrsigner/controller.py | sed -E 's/^.*([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
 VERSION=$(shell cat VERSION)
 
-VIDEO_DEVICE=/dev/video4
+VIDEO_DEVICE ?= /dev/video4
 VIDEO_INPUT=1
 VIDEO_WIDTH=1920
 VIDEO_HEIGHT=1080
