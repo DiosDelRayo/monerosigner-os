@@ -17,6 +17,34 @@ VIDEO_HEIGHT=1080
 
 # TODO: 2024-06-20, clean up the mess later, DEVICE and BOARD_TYPE, serious?
 
+SHA256:
+	@echo 'generate sha256 checksums...'
+	@find opt -type f -exec sha256sum --tag {} \; > SHA256
+	@find tools -type f -exec sha256sum --tag {} \; >> SHA256
+	@find docs -type f -exec sha256sum --tag {} \; >> SHA256
+	@sha256sum --tag docker-compose.yml >> SHA256
+	@sha256sum --tag Dockerfile >> SHA256
+	@sha256sum --tag Makefile >> SHA256
+	@sha256sum --tag README.md >> SHA256
+	@sha256sum --tag LICENSE.md >> SHA256
+	@sha256sum --tag VERSION >> SHA256
+	@sha256sum --tag xmrsigner_dev_ssh >> SHA256
+	@sha256sum --tag xmrsigner_dev_ssh.pub >> SHA256
+	@sha256sum --tag xmrsigner.pub >> SHA256
+	@rm -f SHA256.sig
+	@git add SHA256
+
+sign: SHA256
+	@echo 'Sign the checksums...'
+	@tools/sign.sh
+	@cat SHA256 >> SHA256.sig
+	@git add SHA256.sig
+
+verify:
+	@echo 'Verify source files...'
+	@signify-openbsd -C -p xmrsigner.pub -x SHA256.sig | grep -v ': OK'
+	@echo 'Source is verified!'
+
 sync-version:
 	@echo ${CURRENT_XMRSIGNER_VERSION} > VERSION
 	@VERSION=$(shell cat VERSION)
