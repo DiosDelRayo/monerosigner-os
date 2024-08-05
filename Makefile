@@ -17,7 +17,7 @@ VIDEO_HEIGHT=1080
 
 # TODO: 2024-06-20, clean up the mess later, DEVICE and BOARD_TYPE, serious?
 
-SHA256:
+checksums:
 	@echo 'generate sha256 checksums...'
 	@find opt -type f -exec sha256sum --tag {} \; > SHA256
 	@find tools -type f -exec sha256sum --tag {} \; >> SHA256
@@ -34,7 +34,7 @@ SHA256:
 	@rm -f SHA256.sig
 	@git add SHA256
 
-sign: SHA256
+sign: checksums
 	@echo 'Sign the checksums...'
 	@tools/sign.sh
 	@cat SHA256 >> SHA256.sig
