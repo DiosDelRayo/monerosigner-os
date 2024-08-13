@@ -43,7 +43,7 @@ download_app_repo() {
   # remove previous opt xmrsigner app repo code if it already exists
   rm -fr ${rootfs_overlay}/opt/
   
-  # Download MoneroSigner from GitHub and put into rootfs
+  # Download XmrSigner from GitHub and put into rootfs
   
   # check for custom app branch or custom commit. Custom commit takes priority over branch name
   if ! [ -z ${xmrsigner_app_repo_commit_id} ]; then
