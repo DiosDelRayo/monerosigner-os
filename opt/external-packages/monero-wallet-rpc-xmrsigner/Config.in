@@ -1,25 +1,7 @@
 config BR2_PACKAGE_MONERO_WALLET_RPC_XMRSIGNER
     bool "monero-wallet-rpc-xmrsigner"
-    select BR2_PACKAGE_OPENSSL
-    select BR2_PACKAGE_LIBOPENSSL
-    select BR2_PACKAGE_BOOST
-    select BR2_PACKAGE_LIBUNWIND
-    select BR2_PACKAGE_UNBOUND
-    select BR2_PACKAGE_HIDAPI
-    select BR2_PACKAGE_LIBUSB
-    select BR2_PACKAGE_PROTOBUF
-    select BR2_PACKAGE_LIBZMQ
-    depends on BR2_TOOLCHAIN_HAS_THREADS_NPTL
-    depends on BR2_USE_MMU
-    depends on !BR2_STATIC_LIBS
+
     help
       Monero wallet RPC binary with xmrsigner modifications.
       This package provides the pre-compiled monero-wallet-rpc binary
       and its runtime dependencies.
-
-      Runtime dependencies include: OpenSSL 3.x, Boost, libunwind, 
-      Unbound, HIDAPI, libusb, Protobuf, and ZeroMQ.
-
-comment "monero-wallet-rpc-xmrsigner needs a toolchain w/ NPTL, dynamic library"
-    depends on BR2_USE_MMU
-    depends on !BR2_TOOLCHAIN_HAS_THREADS_NPTL || BR2_STATIC_LIBS
