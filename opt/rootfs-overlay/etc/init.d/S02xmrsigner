@@ -1,5 +1,5 @@
 #!/bin/sh
-# Provides: SeedSigner
+# Provides: XmrSigner
 
 start() {
 	# TODO: 2024-07-15, remove /start.sh and call directly /usr/bin/python3 -m xmrsigner, after xmrsigner is buildroot package
