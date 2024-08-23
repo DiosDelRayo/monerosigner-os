@@ -16,9 +16,7 @@ help()
   Pi Board: (only one allowed)
   -a, --all         Build for all supported pi boards
       --pi0         Build for pi0 and pi0w
-      --pi2         Build for pi2
       --pi02w       Build for pi02w and pi3
-      --pi4         Build for pi4 and pi4cmio
   
   Options:
   -h, --help           Display a help screen and quit 
@@ -115,18 +113,19 @@ build_image() {
   
   VERSION=$(grep VERSION /opt/${rootfs_overlay}/opt/src/xmrsigner/controller.py | awk -F'"' '{ print $2 }')
   if [ -n "$VERSION" ]; then
-	  xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${VERSION}.${config_name}.img"
+	  xmrsigner_os_image_output="${image_dir}/xmrsigner_os-${VERSION}.${config_name}.img"
   else
-	  xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${xmrsigner_app_repo_branch}.${config_name}.img"
+	  xmrsigner_os_image_output="${image_dir}/xmrsigner_os-${xmrsigner_app_repo_branch}.${config_name}.img"
   fi
   if ! [ -z ${xmrsigner_app_repo_commit_id} ]; then
     # use commit id instead of branch name if it is set
-    xmrsigner_os_image_output="${image_dir}/xmrsigner_os.${xmrsigner_app_repo_commit_id}.${config_name}.img"
+    xmrsigner_os_image_output="${image_dir}/xmrsigner_os-${xmrsigner_app_repo_commit_id}.${config_name}.img"
   fi
   
   if [ -f "${build_dir}/images/xmrsigner_os.img" ] && [ -d "${image_dir}" ]; then
     mv -f "${build_dir}/images/xmrsigner_os.img" "${xmrsigner_os_image_output}"
     sha256sum "${xmrsigner_os_image_output}" > ${xmrsigner_os_image_output}.sha256sum
+    sha256sum --tag "${xmrsigner_os_image_output}" > ${xmrsigner_os_image_output}.SHA256
   fi
   
   cd - > /dev/null # return to previous working directory quietly
@@ -279,8 +278,6 @@ fi
 if ! [ -z ${ALL_FLAG} ]; then
   build_image "pi0${DEVARG}" "clean" "${SKIPREPO_ARG}" $LOG
   build_image "pi02w${DEVARG}" "clean" "skip-repo" $LOG
-  build_image "pi2${DEVARG}" "clean" "skip-repo" $LOG
-  build_image "pi4${DEVARG}" "clean" "skip-repo" $LOG
 fi
 
 # Build only for pi0, pi0w, and pi1
@@ -288,19 +285,9 @@ if ! [ -z ${PI0_FLAG} ]; then
   build_image "pi0${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}" $LOG
 fi
 
-# Build only for pi2
-if ! [ -z ${PI2_FLAG} ]; then
-  build_image "pi2${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}" $LOG
-fi
-
 # build for pi02w
 if ! [ -z ${PI02W_FLAG} ]; then
   build_image "pi02w${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}" $LOG
-fi
-
-# build for pi4
-if ! [ -z ${PI4_FLAG} ]; then
-  build_image "pi4${DEVARG}" "${CLEAN_ARG}" "${SKIPREPO_ARG}" $LOG
 fi
 
 if ! [ -z $LOGBUILD ]; then
