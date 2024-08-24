@@ -1,16 +1,16 @@
-## MoneroSignerOS Layers
+## XmrSignerOS Layers
 
 Kernel and User space are all built from scratch.
 
-![Image Showing MoneroSignerOS Layers](img/ssos_layers.png?raw=true "MoneroSignerOS Layers")
+![Image Showing XmrSignerOS Layers](img/ssos_layers.png?raw=true "XmrSignerOS Layers")
 
 1. First layer is the hardware. Normally this is the Raspberry Pi board, camera, LCD Waveshare HAT, and microSD card.
 2. Second layer is the linux kernel. Using Buildroot, only specific and minimum required modules have been hand selected to use in the kernel. This layer is required to make use of hardware functionality.
-3. Third layer is user space. This is where all the libraries and applications reside. The MoneroSigner application lives in this space. This is also where libraries typically live to do networking, display drivers, external port communications, etc. However on MoneroSignerOS, none of these drivers or libraries are loaded (that are typically found in a linux OS).
+3. Third layer is user space. This is where all the libraries and applications reside. The XmrSigner application lives in this space. This is also where libraries typically live to do networking, display drivers, external port communications, etc. However on XmrSignerOS, none of these drivers or libraries are loaded (that are typically found in a linux OS).
 
 ## How is the .iso structured?
 
-![MoneroSignerOS microSD File Structure](img/ssos_sd_files.png?raw=true "MoneroSignerOS microSD File Structure")
+![XmrSignerOS microSD File Structure](img/ssos_sd_files.png?raw=true "XmrSignerOS microSD File Structure")
 
 The zImage a compressed version of the Linux kernel that is self-extracting. In that compressed image, we added RootFS. The entire system in a single file!
 

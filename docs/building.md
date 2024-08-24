@@ -1,9 +1,9 @@
-# Building a MoneroSigner SD card image
-Assemble the MoneroSigner OS along with the MoneroSigner application code into an image file that can be flashed to an SD card and run in your MoneroSigner.
+# Building a XmrSigner SD card image
+Assemble the XmrSigner OS along with the XmrSigner application code into an image file that can be flashed to an SD card and run in your XmrSigner.
 <br/>
 <br/>
 <br/>
-## 🔥🔥🔥🛠 Quickstart: MoneroSigner Reproducible Build! 🛠🔥🔥🔥
+## 🔥🔥🔥🛠 Quickstart: XmrSigner Reproducible Build! 🛠🔥🔥🔥
 
 <details><summary>macOS / Linux instructions:</summary>
 <p>
@@ -17,7 +17,7 @@ Assemble the MoneroSigner OS along with the MoneroSigner application code into a
 In a terminal window:
 
 ```bash
-# Copy the MoneroSigner OS repo to your local machine
+# Copy the XmrSigner OS repo to your local machine
 git clone --recursive https://github.com/MoneroSigner/monerosigner-os.git
 
 # Move into the repo directory
@@ -66,7 +66,7 @@ Recommend running these steps in WSL2 (Windows Subsystem for Linux) so that you 
 In a terminal window:
 
 ```bash
-# Copy the MoneroSigner OS repo to your local machine
+# Copy the XmrSigner OS repo to your local machine
 git clone --recursive https://github.com/MoneroSigner/monerosigner-os.git
 
 # Move into the repo directory
@@ -109,9 +109,9 @@ Building can take 25min to 2.5hrs+ depending on your cpu and will require 20-30 
 ## Build Results
 When the build completes you'll see:
 ```bash
-monerosigner-os-build-images-1  | /opt/buildroot
-monerosigner-os-build-images-1  | a380cb93eb852254863718a9c000be9ec30cee14a78fc0ec90708308c17c1b8a  /opt/../images/monerosigner_os.0.7.0.pi0.img
-monerosigner-os-build-images-1 exited with code 0
+xmrsigner-os-build-images-1  | /opt/buildroot
+xmrsigner-os-build-images-1  | a380cb93eb852254863718a9c000be9ec30cee14a78fc0ec90708308c17c1b8a  /opt/../images/xmrsigner_os.0.7.0.pi0.img
+xmrsigner-os-build-images-1 exited with code 0
 ```
 
 The second line above lists the SHA256 hash of the image file that was built. This hash should match the hash of the release image [published on the main github repo](https://github.com/MoneroSigner/monerosigner/releases/tag/0.7.0). If the hashes match, then you have successfully confirmed the reproducible build!
@@ -123,13 +123,10 @@ ls -l
 
 total 26628
 -rw-r--r-- 1 root root       97 Sep 11 02:09 README.md
--rw-r--r-- 1 root root 27262976 Sep 11 18:49 monerosigner_os.0.7.0.pi0.img
+-rw-r--r-- 1 root root 27262976 Sep 11 18:49 xmrsigner_os-0.7.0.pi0.img
 ```
 
-That image can be burned to an SD card and run in your MoneroSigner.
-
-
-
+That image can be burned to an SD card and run in your XmrSigner.
 
 <br/>
 <br/>
@@ -140,12 +137,9 @@ That image can be burned to an SD card and run in your MoneroSigner.
 ## Board configs
 | Board                 | Image Name                        | Build Script Option |
 | --------------------- | --------------------------------- | ------------------- |
-|Raspberry Pi Zero      |`monerosigner_os.<tag>.pi0.img`      | --pi0               |
-|Raspberry Pi Zero W    |`monerosigner_os.<tag>.pi0.img`      | --pi0               |
-|Raspberry Pi 2 Model B |`monerosigner_os.<tag>.pi2.img`      | --pi2               |
-|Raspberry Pi Zero 2 W  |`monerosigner_os.<tag>.pi02w.img`    | --pi02w             |
-|Raspberry Pi 3 Model B |`monerosigner_os.<tag>.pi02w.img`    | --pi02w             |
-|Raspberry Pi 4 Model B |`monerosigner_os.<tag>.pi4.img`      | --pi4               |
+|Raspberry Pi Zero      |`xmrsigner_os.<tag>.pi0.img`      | --pi0               |
+|Raspberry Pi Zero W    |`xmrsigner_os.<tag>.pi0.img`      | --pi0               |
+|Raspberry Pi Zero 2 W  |`xmrsigner_os.<tag>.pi02w.img`    | --pi02w             |
 
 
 ---
@@ -154,7 +148,5 @@ That image can be burned to an SD card and run in your MoneroSigner.
 ## Hashes for each build target
 | Build | SHA256 Hash | Image Name |
 | ----- | ----------- | ---------- |
-| pi0   |``|  monerosigner_os.0.7.0.pi0.img|
-| pi02w |``|  monerosigner_os.0.7.0.pi02w.img|
-| pi2   |``|  monerosigner_os.0.7.0.pi2.img|
-| pi4   |``|  monerosigner_os.0.7.0.pi4.img|
+| pi0   |``|  xmrsigner_os-0.7.0.pi0.img|
+| pi02w |``|  xmrsigner_os-0.7.0.pi02w.img|

@@ -30,18 +30,18 @@ or
 
 Or you can use any of the Buildroot customization commands like `make menuconfig` or `linux-menuconfig`  from the `/output` directory
 
-Move images manually built with `make` with the command `mv images/monerosigner_os.img /images/`
+Move images manually built with `make` with the command `mv images/xmrsigner_os.img /images/`
 
 
 ## Image Location and Naming
 
 By default, the docker-compose.yml is configured to create a container volume of the *images* directory in the repo. This is where all the image files are written out after the container completes building the OS from source. That volume is accessible from the host. The image files are named using this convention:
 
-`monerosigner_os.<app_repo_branch>.<board_config>.img`
+`xmrsigner_os-<app_repo_branch>.<board_config>.img`
 
 Example name for a `pi0` built off the 0.5.2 branch would be named:
 
-`monerosigner_os.0.5.2.pi0.img`
+`xmrsigner_os-0.5.2.pi0.img`
 
 
 ## Development Configs

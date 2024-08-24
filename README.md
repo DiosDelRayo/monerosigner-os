@@ -1,5 +1,5 @@
-<h1 align="center">MoneroSigner OS</h1>
-<strong><a href="">This is a fork of SeedSigner OS, with changes necessary for MoneroSigner</a>.</strong> <a href="A huge thank you to https://x.com/SeedSigner">@SeedSigner</a> without this project would not exist!
+<h1 align="center">XmrSigner OS</h1>
+<strong><a href="">This is a fork of SeedSigner OS, with changes necessary for XmrSigner</a>.</strong> <a href="A huge thank you to https://x.com/SeedSigner">@SeedSigner</a> without this project would not exist!
 
 **This readme is still work in progress, like the whole repo. [With time I will change all the documentation where changes to SeedSigner OS where made](Todo.md)**
 
@@ -13,7 +13,7 @@
 
 <br/>
 
-JUMP STRAIGHT TO: [🔥🔥🔥🛠 Quickstart: SeedSigner Reproducible Build! 🛠🔥🔥🔥](docs/building.md)
+JUMP STRAIGHT TO: [🔥🔥🔥🛠 Quickstart: XmrSigner Reproducible Build! 🛠🔥🔥🔥](docs/building.md)
 
 <br/>
 
@@ -21,12 +21,12 @@ JUMP STRAIGHT TO: [🔥🔥🔥🛠 Quickstart: SeedSigner Reproducible Build! �
 
 # Overview
 
-A custom linux based operating system built to manage software running on airgapped Bitcoin signing device. MoneroSigner is both the project name and [application](https://github.com/DiosDelRayo/MoneroSigner) running on airgapped hardware. This custom operating system, like all operating systems, manages the hardware resources and provides them to the application code. It's currently designed to run on common Raspberry Pi hardware with [accessories](https://github.com/SeedSigner/seedsigner/#shopping-list). The goal of SeedSigner OS is to provide an easy, fast, and secure way to build microSD card image to securely run [SeedSigner](https://seedsigner.com) code.
+A custom linux based operating system built to manage software running on airgapped Bitcoin signing device. MoneroSigner is both the project name and [application](https://github.com/DiosDelRayo/MoneroSigner) running on airgapped hardware. This custom operating system, like all operating systems, manages the hardware resources and provides them to the application code. It's currently designed to run on common Raspberry Pi hardware with [accessories](https://github.com/SeedSigner/seedsigner/#shopping-list). The goal of XmrSigner OS is to provide an easy, fast, and secure way to build microSD card image to securely run [XmrSigner](https://xmrsigner.com) code.
 
 
 ## ⚙️ Under the Hood
 
-SeedSigner OS is built using [Buildroot](https://www.buildroot.org). Buildroot is a simple, efficient and easy-to-use tool to generate embedded Linux systems through cross-compilation. SeedSigner OS does not fork Buildroot, but uses Buildroot with custom configurations to build microSD card images tailor made for running SeedSigner.
+XmrSigner OS is built using [Buildroot](https://www.buildroot.org). Buildroot is a simple, efficient and easy-to-use tool to generate embedded Linux systems through cross-compilation. SeedSigner OS does not fork Buildroot, but uses Buildroot with custom configurations to build microSD card images tailor made for running SeedSigner.
 
 
 ## 🛂 Security
