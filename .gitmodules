@@ -1,3 +1,6 @@
 [submodule "buildroot"]
 	path = opt/buildroot
 	url = https://github.com/DiosDelRayo/monerosigner-buildroot
+[submodule "opt/external-packages/monero-ots"]
+	path = opt/external-packages/monero-ots
+	url = https://github.com/MoneroSDK/ots-buildroot2.git
