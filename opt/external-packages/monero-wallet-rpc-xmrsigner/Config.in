@@ -1,7 +1,0 @@
-config BR2_PACKAGE_MONERO_WALLET_RPC_XMRSIGNER
-    bool "monero-wallet-rpc-xmrsigner"
-
-    help
-      Monero wallet RPC binary with xmrsigner modifications.
-      This package provides the pre-compiled monero-wallet-rpc binary
-      and its runtime dependencies.
