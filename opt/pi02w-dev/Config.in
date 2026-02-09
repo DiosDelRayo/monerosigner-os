@@ -1,3 +1,4 @@
+source "../external-packages/monero-ots/Config.in"
 source "../external-packages/monero-wallet-rpc/Config.in"
 source "../external-packages/monero-wallet-rpc-xmrsigner/Config.in"
 source "../external-packages/python-mock/Config.in"
