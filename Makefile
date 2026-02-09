@@ -11,6 +11,7 @@ CURRENT_XMRSIGNER_VERSION=$(shell grep VERSION ../MoneroSigner/src/xmrsigner/con
 VERSION=$(shell cat VERSION)
 
 VIDEO_DEVICE ?= /dev/video4
+VIDEO_GEOMETRY ?= "0%:0%"
 VIDEO_INPUT=1
 VIDEO_WIDTH=1920
 VIDEO_HEIGHT=1080
@@ -111,4 +112,4 @@ listen-for-logs:
 	@nc -u -l 0.0.0.0 ${LOG_PORT} | tee -a listen_for_logs.txt
 
 watch-hdmi:
-	@mplayer tv:// -tv driver=v4l2:device=$(VIDEO_DEVICE):input=$(VIDEO_INPUT):width=$(VIDEO_WIDTH):height=$(VIDEO_HEIGHT)
+	@mplayer tv:// -tv driver=v4l2:device=$(VIDEO_DEVICE):input=$(VIDEO_INPUT):width=$(VIDEO_WIDTH):height=$(VIDEO_HEIGHT) -geometry "$(VIDEO_GEOMETRY)" 2&> /dev/null &
