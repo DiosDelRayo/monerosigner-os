@@ -1,9 +1,0 @@
-services:
-  build-images:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ./opt:/opt
-      - ./images:/images
-    command: "${SS_ARGS:---no-op}"

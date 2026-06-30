@@ -1,1 +1,0 @@
-spidev.bufsiz=131072
